@@ -1,0 +1,11 @@
+{
+  "name": "@warm-ui/stories",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI 组件设计故事与使用场景文档",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Stories build not configured yet'",
+    "test": "echo 'No tests for stories'"
+  }
+}

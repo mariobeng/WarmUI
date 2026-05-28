@@ -1,0 +1,26 @@
+{
+  "name": "@warm-ui/components",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI 核心组件库 — 基于 Web Components，框架无关",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "test": "vitest run",
+    "lint": "eslint src --ext .js"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

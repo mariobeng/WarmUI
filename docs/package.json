@@ -1,0 +1,18 @@
+{
+  "name": "@warm-ui/docs",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI 文档站点 — 组件演示与使用指南",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev .",
+    "build": "vitepress build .",
+    "preview": "vitepress preview ."
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.0"
+  },
+  "dependencies": {
+    "@warm-ui/components": "^0.1.0"
+  }
+}

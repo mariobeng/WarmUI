@@ -1,0 +1,15 @@
+{
+  "name": "@warm-ui/plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI 老龄化模拟器浏览器插件 — 让开发者一键体验老年人的视、触、知世界",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "zip": "npm run build && bestzip dist/warm-ui-aging-simulator.zip dist/*"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "warm-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI — 为长辈而生的适老化体验增强层",
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "build:components": "npm run build -w packages/components",
+    "build:react": "npm run build -w packages/react",
+    "build:vue": "npm run build -w packages/vue",
+    "dev": "npm run dev --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces",
+    "docs:dev": "npm run dev -w docs",
+    "docs:build": "npm run build -w docs"
+  },
+  "workspaces": [
+    "packages/components",
+    "packages/react",
+    "packages/vue",
+    "packages/plugin",
+    "docs",
+    "stories"
+  ],
+  "keywords": [
+    "warm-ui",
+    "accessibility",
+    "elderly",
+    "web-components",
+    "aging",
+    "inclusive-design"
+  ],
+  "license": "MIT"
+}
