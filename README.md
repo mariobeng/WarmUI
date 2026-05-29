@@ -1,6 +1,13 @@
 # WarmUI — 为长辈而生的适老化体验增强层
 
+[![GitHub stars](https://img.shields.io/github/stars/mariobeng/WarmUI?style=social)](https://github.com/mariobeng/WarmUI)
+[![GitHub forks](https://img.shields.io/github/forks/mariobeng/WarmUI?style=social)](https://github.com/mariobeng/WarmUI/fork)
+[![GitHub license](https://img.shields.io/github/license/mariobeng/WarmUI)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/@warm-ui/components)](https://www.npmjs.com/package/@warm-ui/components)
+
 **一个开源的前端组件库，让每一个产品都能温柔地拥抱老年人。**
+
+[English](README.en.md) | 简体中文
 
 ---
 
