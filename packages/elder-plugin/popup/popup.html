@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WarmUI 适老化助手</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container" role="main" aria-label="适老化助手设置面板">
+      <header class="header">
+        <div class="header-icon" aria-hidden="true">🧓</div>
+        <h1>适老化助手</h1>
+        <p class="header-desc">让这个网页更适合您阅读和使用</p>
+      </header>
+
+      <section class="section" aria-label="一键场景模式">
+        <h2 class="section-title">一键场景模式</h2>
+        <p class="section-desc">选择一种模式，自动帮您调整好所有设置</p>
+        <div
+          class="presets"
+          id="presetsContainer"
+          role="radiogroup"
+          aria-label="场景模式选择"
+        >
+          <button
+            class="preset-btn preset-active"
+            data-preset="font"
+            role="radio"
+            aria-checked="true"
+            aria-label="大字号模式，推荐"
+          >
+            <span class="preset-icon" aria-hidden="true">📖</span>
+            <span class="preset-label">大字号模式</span>
+            <span class="preset-badge">推荐</span>
+          </button>
+          <button
+            class="preset-btn"
+            data-preset="clean"
+            role="radio"
+            aria-checked="false"
+            aria-label="简洁模式"
+          >
+            <span class="preset-icon" aria-hidden="true">🧘</span>
+            <span class="preset-label">简洁模式</span>
+          </button>
+          <button
+            class="preset-btn"
+            data-preset="speech"
+            role="radio"
+            aria-checked="false"
+            aria-label="语音优先模式"
+          >
+            <span class="preset-icon" aria-hidden="true">🗣️</span>
+            <span class="preset-label">语音优先</span>
+          </button>
+          <button
+            class="preset-btn"
+            data-preset="night"
+            role="radio"
+            aria-checked="false"
+            aria-label="夜间模式"
+          >
+            <span class="preset-icon" aria-hidden="true">🌙</span>
+            <span class="preset-label">夜间模式</span>
+          </button>
+          <button
+            class="preset-btn"
+            data-preset="custom"
+            role="radio"
+            aria-checked="false"
+            aria-label="自定义模式"
+          >
+            <span class="preset-icon" aria-hidden="true">✋</span>
+            <span class="preset-label">自定义</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="section" aria-label="单独调节各项功能">
+        <h2 class="section-title">单独调节</h2>
+        <p class="section-desc">每一项都可以自己开关和调整</p>
+
+        <div class="enhancer-list" id="enhancerList">
+          <div class="enhancer-item" data-enhancer="font">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">🔤</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">字体放大</span>
+                <span class="enhancer-desc">文字更大、更清晰</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <div class="enhancer-level" id="fontLevel">
+                <button
+                  class="level-btn"
+                  data-level="1.25"
+                  aria-label="小幅度放大"
+                >
+                  小
+                </button>
+                <button
+                  class="level-btn level-active"
+                  data-level="1.5"
+                  aria-label="中幅度放大，当前选中"
+                >
+                  中
+                </button>
+                <button
+                  class="level-btn"
+                  data-level="2.0"
+                  aria-label="大幅度放大"
+                >
+                  大
+                </button>
+              </div>
+              <label class="switch" aria-label="字体放大开关">
+                <input
+                  type="checkbox"
+                  id="enhancerFont"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="enhancer-item" data-enhancer="contrast">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">🎨</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">高对比度</span>
+                <span class="enhancer-desc">颜色更鲜明，看得更清楚</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <div class="enhancer-level" id="contrastLevel">
+                <button
+                  class="level-btn level-active"
+                  data-theme="high-contrast"
+                  aria-label="高对比度主题"
+                >
+                  高对比
+                </button>
+                <button
+                  class="level-btn"
+                  data-theme="deuteranopia"
+                  aria-label="红绿色盲主题"
+                >
+                  色盲
+                </button>
+                <button
+                  class="level-btn"
+                  data-theme="dark"
+                  aria-label="深色主题"
+                >
+                  深色
+                </button>
+              </div>
+              <label class="switch" aria-label="高对比度开关">
+                <input
+                  type="checkbox"
+                  id="enhancerContrast"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="enhancer-item" data-enhancer="layout">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">📄</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">阅读模式</span>
+                <span class="enhancer-desc">去掉广告和干扰，专心阅读</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <label class="switch" aria-label="阅读模式开关">
+                <input
+                  type="checkbox"
+                  id="enhancerLayout"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="enhancer-item" data-enhancer="click">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">👆</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">防误触</span>
+                <span class="enhancer-desc">按钮更大，不容易点错</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <label class="switch" aria-label="防误触开关">
+                <input
+                  type="checkbox"
+                  id="enhancerClick"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="enhancer-item" data-enhancer="speech">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">🔊</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">语音朗读</span>
+                <span class="enhancer-desc">选中文字，帮您读出来</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <label class="switch" aria-label="语音朗读开关">
+                <input
+                  type="checkbox"
+                  id="enhancerSpeech"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="enhancer-item" data-enhancer="guide">
+            <div class="enhancer-info">
+              <span class="enhancer-icon" aria-hidden="true">🧭</span>
+              <div class="enhancer-text">
+                <span class="enhancer-name">页面引导</span>
+                <span class="enhancer-desc">告诉您下一步该点哪里</span>
+              </div>
+            </div>
+            <div class="enhancer-controls">
+              <label class="switch" aria-label="页面引导开关">
+                <input
+                  type="checkbox"
+                  id="enhancerGuide"
+                  checked
+                  aria-checked="true"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button
+          id="resetBtn"
+          class="btn btn-secondary"
+          aria-label="恢复默认设置"
+        >
+          恢复默认
+        </button>
+        <button id="statusBtn" class="btn btn-primary" aria-live="polite">
+          设置已自动保存
+        </button>
+      </div>
+
+      <footer class="footer">
+        <span>WarmUI 适老化助手 v0.1.0</span>
+        <span>所有数据仅在本地处理</span>
+      </footer>
+    </div>
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "@warm-ui/elder-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WarmUI 适老化助手 — 让每个网页都适合长辈使用的浏览器插件",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "zip": "npm run build && bestzip dist/warm-ui-elder-plugin.zip dist/*"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

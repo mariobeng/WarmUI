@@ -16,6 +16,12 @@ template.innerHTML = `
       font-weight: 600;
       color: var(--warm-text-color, #333);
       margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .title-icon {
+      flex-shrink: 0;
     }
     .desc {
       font-size: 0.9rem;
@@ -87,13 +93,15 @@ template.innerHTML = `
       justify-content: center;
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-      transition: transform 0.2s;
+      transition: border-radius 0.25s ease, width 0.25s ease, height 0.25s ease, padding 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
       animation: rescueFloat 3s ease-in-out infinite;
     }
     :host([float]) .rescue:hover {
       transform: scale(1.1);
     }
-    :host([float]) .title,
+    :host([float].expanded) .rescue:hover {
+      transform: none;
+    }
     :host([float]) .desc,
     :host([float]) .actions,
     :host([float]) .voice-btn,
@@ -101,9 +109,16 @@ template.innerHTML = `
       display: none;
     }
     :host([float]) .title {
-      display: block;
+      display: flex;
       margin: 0;
       font-size: 1.5rem;
+    }
+    :host([float]) .title-icon {
+      width: 1.5em;
+      height: 1.5em;
+    }
+    :host([float]) .title-text {
+      display: none;
     }
     :host([float].expanded) .rescue {
       border-radius: var(--warm-radius, 16px);
@@ -112,6 +127,9 @@ template.innerHTML = `
       padding: 1rem 1.25rem;
       animation: none;
       cursor: default;
+      transform: none;
+      display: block;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     }
     :host([float].expanded) .title,
     :host([float].expanded) .desc,
@@ -119,6 +137,12 @@ template.innerHTML = `
     :host([float].expanded) .voice-btn,
     :host([float].expanded) .voice-result {
       display: block;
+    }
+    :host([float].expanded) .title {
+      display: inline-flex;
+    }
+    :host([float].expanded) .title-text {
+      display: inline;
     }
     :host([float].expanded) .actions {
       display: flex;
@@ -138,7 +162,17 @@ template.innerHTML = `
     }
   </style>
   <div class="rescue" part="rescue">
-    <div class="title" part="title">🛟 别着急，我在这里</div>
+    <div class="title" part="title">
+      <svg class="title-icon" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" part="icon">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="6"/>
+        <line x1="12" y1="2" x2="12" y2="6"/>
+        <line x1="12" y1="18" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="6" y2="12"/>
+        <line x1="18" y1="12" x2="22" y2="12"/>
+      </svg>
+      <span class="title-text">别着急，我在这里</span>
+    </div>
     <div class="desc" part="desc">
       您当前在：<span id="pageName"><slot name="page">当前页面</slot></span>
     </div>
@@ -146,11 +180,20 @@ template.innerHTML = `
       <slot></slot>
     </div>
     <button class="voice-btn" id="voiceBtn" part="voice">
-      🎤 用语音告诉我您要找什么
+      <svg class="voice-icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <line x1="12" y1="19" x2="12" y2="23"/>
+        <line x1="8" y1="23" x2="16" y2="23"/>
+      </svg>
+      用语音告诉我您要找什么
     </button>
     <div class="voice-result" id="voiceResult" part="voice-result"></div>
   </div>
 `;
+
+const MIC_ICON = '<svg class="voice-icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+const REC_ICON = '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="6"/></svg>';
 
 export class WarmRescue extends HTMLElement {
     static get observedAttributes() {
@@ -194,7 +237,7 @@ export class WarmRescue extends HTMLElement {
         }
         this._isListening = true;
         this._voiceBtn.classList.add('listening');
-        this._voiceBtn.innerHTML = '🔴 正在听...点击停止';
+        this._voiceBtn.innerHTML = `${REC_ICON} 正在听...点击停止`;
 
         try {
             const { SpeechAdapter } = await import('../speech/speech-adapter.js');
@@ -204,7 +247,7 @@ export class WarmRescue extends HTMLElement {
                 continuous: false,
                 onResult: (transcript, isFinal) => {
                     if (isFinal) {
-                        this._voiceResult.textContent = `您说：${transcript}`;
+                        this._voiceResult.textContent = `您说：${transcript} `;
                         this._voiceResult.classList.add('show');
                         this._handleVoiceQuery(transcript);
                         this._stopVoiceInput();
@@ -232,7 +275,7 @@ export class WarmRescue extends HTMLElement {
     _stopVoiceInput() {
         this._isListening = false;
         this._voiceBtn.classList.remove('listening');
-        this._voiceBtn.innerHTML = '🎤 用语音告诉我您要找什么';
+        this._voiceBtn.innerHTML = `${MIC_ICON} 用语音告诉我您要找什么`;
         if (this._recognitionController) {
             this._recognitionController.stop();
             this._recognitionController = null;

@@ -20,6 +20,7 @@
     "packages/react",
     "packages/vue",
     "packages/plugin",
+    "packages/elder-plugin",
     "docs",
     "stories"
   ],

@@ -1,0 +1,1247 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WarmUI 全功能体验站</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --warm-primary: #4a90d9;
+        --warm-primary-hover: #357abd;
+        --warm-success: #52c41a;
+        --warm-error: #ff4d4f;
+        --warm-warning: #faad14;
+        --warm-text-color: #333;
+        --warm-text-secondary: #666;
+        --warm-card-bg: #fff;
+        --warm-border: #eee;
+        --warm-radius: 16px;
+        --warm-font-size: 1rem;
+        --bg-body: #f8f9fb;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+          "Microsoft YaHei", sans-serif;
+        background: var(--bg-body);
+        color: var(--warm-text-color);
+        line-height: 1.6;
+      }
+
+      /* ===== Hero ===== */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #e8f0fe 0%,
+          #f5f0ff 50%,
+          #fff5f0 100%
+        );
+        padding: 60px 24px 50px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "☀️";
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        font-size: 48px;
+        opacity: 0.3;
+        animation: heroFloat 6s ease-in-out infinite;
+      }
+      .hero::after {
+        content: "🌿";
+        position: absolute;
+        bottom: 20px;
+        left: 40px;
+        font-size: 36px;
+        opacity: 0.25;
+        animation: heroFloat 8s ease-in-out infinite reverse;
+      }
+      @keyframes heroFloat {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(5deg);
+        }
+      }
+      .hero h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, #4a90d9, #7c5cbf);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero p {
+        font-size: 1.1rem;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto 24px;
+      }
+      .hero .tagline {
+        display: inline-block;
+        padding: 6px 20px;
+        background: rgba(74, 144, 217, 0.1);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: var(--warm-primary);
+      }
+
+      /* ===== Nav Tabs ===== */
+      .layer-nav {
+        display: flex;
+        gap: 4px;
+        padding: 0 24px;
+        max-width: 1000px;
+        margin: -24px auto 0;
+        position: relative;
+        z-index: 10;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .layer-nav a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        background: #fff;
+        border-radius: 12px 12px 0 0;
+        text-decoration: none;
+        font-size: 0.85rem;
+        color: var(--warm-text-secondary);
+        transition: all 0.2s;
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+      }
+      .layer-nav a:hover,
+      .layer-nav a.active {
+        color: var(--warm-primary);
+        background: var(--bg-body);
+        font-weight: 500;
+      }
+
+      /* ===== Section ===== */
+      .section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 24px 60px;
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+      .section-header {
+        margin-bottom: 32px;
+      }
+      .section-header h2 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+      }
+      .section-header p {
+        color: var(--warm-text-secondary);
+        font-size: 0.95rem;
+      }
+
+      /* ===== Demo Card ===== */
+      .demo-card {
+        background: #fff;
+        border-radius: var(--warm-radius);
+        padding: 28px;
+        margin-bottom: 28px;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--warm-border);
+      }
+      .demo-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+      .demo-card-header h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+      .demo-card-header .badge {
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 10px;
+        background: #e8f0fe;
+        color: var(--warm-primary);
+      }
+      .demo-card .desc {
+        font-size: 0.9rem;
+        color: var(--warm-text-secondary);
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .demo-area {
+        padding: 20px;
+        background: #fafbfc;
+        border-radius: 12px;
+        border: 1px dashed #e8e8e8;
+        margin-bottom: 12px;
+      }
+      .demo-code {
+        background: #1e1e2e;
+        color: #cdd6f4;
+        border-radius: 10px;
+        padding: 16px 20px;
+        font-size: 0.78rem;
+        font-family: "Fira Code", "JetBrains Mono", monospace;
+        overflow-x: auto;
+        line-height: 1.5;
+        position: relative;
+      }
+      .demo-code .kw {
+        color: #89b4fa;
+      }
+      .demo-code .str {
+        color: #a6e3a1;
+      }
+      .demo-code .tag {
+        color: #f38ba8;
+      }
+      .demo-code .attr {
+        color: #f9e2af;
+      }
+      .demo-code .cmt {
+        color: #6c7086;
+      }
+
+      .demo-controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .demo-controls label {
+        font-size: 0.85rem;
+        color: var(--warm-text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .demo-controls select,
+      .demo-controls input[type="range"] {
+        padding: 4px 8px;
+        border: 1px solid var(--warm-border);
+        border-radius: 6px;
+        font-size: 0.85rem;
+      }
+
+      /* ===== Theme Switcher ===== */
+      .theme-grid {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 8px 0;
+      }
+      .theme-btn {
+        padding: 8px 16px;
+        border: 2px solid var(--warm-border);
+        border-radius: 10px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover {
+        border-color: var(--warm-primary);
+      }
+      .theme-btn.active {
+        border-color: var(--warm-primary);
+        background: #e8f0fe;
+      }
+
+      /* ===== Praise demo ===== */
+      .praise-trigger-area {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      /* ===== Buddy demo ===== */
+      .buddy-mini-demo {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .buddy-mini-demo > div {
+        flex: 1;
+        min-width: 200px;
+        padding: 16px;
+        border-radius: 12px;
+        background: #f5f5f5;
+        text-align: center;
+      }
+      .buddy-mini-demo .role {
+        font-size: 0.8rem;
+        color: #999;
+        margin-bottom: 8px;
+      }
+
+      /* ===== Simulator Demo ===== */
+      .sim-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 10px;
+      }
+      .sim-item {
+        padding: 12px 14px;
+        border: 1px solid var(--warm-border);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: all 0.15s;
+        font-size: 0.85rem;
+      }
+      .sim-item:hover {
+        border-color: var(--warm-primary);
+      }
+      .sim-item.active {
+        border-color: var(--warm-primary);
+        background: #e8f0fe;
+      }
+      .sim-item input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
+      /* ===== Checker Output ===== */
+      #checkerOutput {
+        margin-top: 12px;
+        padding: 16px;
+        background: #1e1e2e;
+        border-radius: 10px;
+        color: #cdd6f4;
+        font-size: 0.82rem;
+        font-family: monospace;
+        white-space: pre-wrap;
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      /* ===== Footer ===== */
+      .demo-footer {
+        text-align: center;
+        padding: 40px 24px;
+        color: var(--warm-text-secondary);
+        font-size: 0.9rem;
+      }
+      .demo-footer a {
+        color: var(--warm-primary);
+        text-decoration: none;
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 640px) {
+        .hero h1 {
+          font-size: 1.6rem;
+        }
+        .demo-card {
+          padding: 20px;
+        }
+        .layer-nav a {
+          font-size: 0.75rem;
+          padding: 8px 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <h1>☀️ WarmUI 全功能体验站</h1>
+      <p>
+        亲手体验 12
+        个适老化组件如何从感官、认知、情感三个维度温柔地拥抱每一位用户。
+      </p>
+      <span class="tagline">点击下方导航栏，逐层探索 🎯</span>
+    </section>
+
+    <!-- ============ NAV ============ -->
+    <nav class="layer-nav" id="layerNav">
+      <a href="#layer1" class="active" data-layer="1">🎯 感官补偿</a>
+      <a href="#layer2" data-layer="2">🧠 认知辅助</a>
+      <a href="#layer3" data-layer="3">💬 情感连接</a>
+      <a href="#layer4" data-layer="4">🔧 开发者工具</a>
+    </nav>
+
+    <!-- ================================================================ -->
+    <!-- LAYER 1: 感官补偿 -->
+    <!-- ================================================================ -->
+    <section class="section active" id="layer1">
+      <div class="section-header">
+        <h2>🎯 第一层：基础感官补偿</h2>
+        <p>
+          解决"看不见、点不准、听不清"的问题 — 底层能力，也是每个组件库的起点。
+        </p>
+      </div>
+
+      <!-- warm-button -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-button&gt; 防抖触控按钮</h3>
+          <span class="badge">L1 感官补偿</span>
+        </div>
+        <div class="desc">
+          老人手抖导致误触时，防抖延迟 +
+          触控容差区域能有效降低误按率。开启「适老化模式」体验效果。
+        </div>
+        <div class="demo-area">
+          <warm-button id="demoBtn1">标准按钮</warm-button>
+          <warm-button elder-friendly id="demoBtn2">适老化按钮</warm-button>
+          <span
+            id="btnFeedback"
+            style="margin-left: 12px; font-size: 0.85rem; color: #999"
+          ></span>
+        </div>
+        <div class="demo-controls">
+          <label
+            ><input type="checkbox" id="btnToggleElder" checked />
+            启用适老化</label
+          >
+          <label
+            >防抖延迟：
+            <select id="btnDebounce">
+              <option value="0">0ms</option>
+              <option value="200">200ms</option>
+              <option value="300" selected>300ms</option>
+              <option value="500">500ms</option>
+            </select>
+          </label>
+          <label
+            >容差区域：
+            <select id="btnTolerance">
+              <option value="0">0px</option>
+              <option value="8">8px</option>
+              <option value="12" selected>12px</option>
+              <option value="16">16px</option>
+            </select>
+          </label>
+        </div>
+        <div class="demo-code">
+          <span class="cmt"
+            >&lt;!-- 适老化按钮：防抖300ms + 容差12px --&gt;</span
+          ><br />
+          &lt;<span class="tag">warm-button</span>
+          <span class="attr">elder-friendly</span>
+          <span class="attr">debounce-delay</span>=<span class="str"
+            >"300"</span
+          >
+          <span class="attr">tolerance</span>=<span class="str">"12"</span
+          >&gt;确认挂号&lt;/<span class="tag">warm-button</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-text -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-text&gt; 动态字号引擎</h3>
+          <span class="badge">L1 感官补偿</span>
+        </div>
+        <div class="desc">
+          根据内容语义智能分级，保持信息层级的同时放大可读性。支持 heading /
+          body / button / caption 语义级别。
+        </div>
+        <div class="demo-area">
+          <div style="margin-bottom: 12px">
+            <warm-text size="heading">标题级别文字（heading）</warm-text>
+          </div>
+          <div style="margin-bottom: 12px">
+            <warm-text size="body"
+              >正文级别文字（body）- 默认阅读字号</warm-text
+            >
+          </div>
+          <div style="margin-bottom: 12px">
+            <warm-text size="button">按钮级别文字（button）</warm-text>
+          </div>
+          <div>
+            <warm-text size="caption"
+              >辅助说明文字（caption）- 最小字号</warm-text
+            >
+          </div>
+        </div>
+        <div class="demo-controls">
+          <warm-text style="margin-right: 8px">当前语义级别：</warm-text>
+          <select id="textSizeSelect">
+            <option value="heading">heading 标题</option>
+            <option value="body" selected>body 正文</option>
+            <option value="button">button 按钮</option>
+            <option value="caption">caption 辅助</option>
+            <option value="large">large 大号</option>
+          </select>
+          <label
+            >额外缩放：<input
+              type="range"
+              id="textLevel"
+              min="0"
+              max="5"
+              value="0"
+              style="width: 80px"
+            />
+            <span id="textLevelLabel">0</span></label
+          >
+        </div>
+        <div
+          style="
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: #fafbfc;
+            border-radius: 8px;
+          "
+        >
+          <warm-text id="textLivePreview" size="body"
+            >动态预览文本 — 修改上面的控件试试效果</warm-text
+          >
+        </div>
+        <div class="demo-code" style="margin-top: 8px">
+          &lt;<span class="tag">warm-text</span>
+          <span class="attr">size</span>=<span class="str">"heading"</span
+          >&gt;标题文字&lt;/<span class="tag">warm-text</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-speech -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-speech&gt; 语音朗读增强版</h3>
+          <span class="badge">L1 感官补偿</span>
+        </div>
+        <div class="desc">
+          不仅仅是
+          TTS，还能自动分析页面结构，用自然语言告诉老人"这个页面有3个部分……"。下方体验文本朗读和页面大纲朗读。
+        </div>
+        <div class="demo-area">
+          <div style="margin-bottom: 16px">
+            <warm-speech
+              text="WarmUI 是一款为长辈设计的适老化组件库，它从感官、认知到情感全面覆盖老年人的需求。"
+            >
+              朗读介绍
+            </warm-speech>
+          </div>
+          <div>
+            <warm-speech mode="outline"> 朗读页面结构 </warm-speech>
+          </div>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-speech</span>
+          <span class="attr">text</span>=<span class="str"
+            >"WarmUI 是适老化组件库"</span
+          >&gt;朗读&lt;/<span class="tag">warm-speech</span>&gt;<br />
+          &lt;<span class="tag">warm-speech</span>
+          <span class="attr">mode</span>=<span class="str">"outline"</span
+          >&gt;朗读页面结构&lt;/<span class="tag">warm-speech</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-theme -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>🎨 高对比度动态配色系统</h3>
+          <span class="badge">L1 感官补偿</span>
+        </div>
+        <div class="desc">
+          预设多套色弱适配主题 —
+          红绿色盲、蓝黄色盲、高对比度。点击下方按钮切换全局主题，观看所有组件的颜色变化。
+        </div>
+        <div class="demo-area">
+          <div class="theme-grid">
+            <button class="theme-btn active" data-theme="default">
+              🌓 默认主题
+            </button>
+            <button class="theme-btn" data-theme="deuteranopia">
+              🟢 红绿色盲（绿弱）
+            </button>
+            <button class="theme-btn" data-theme="protanopia">
+              🔴 红绿色盲（红弱）
+            </button>
+            <button class="theme-btn" data-theme="tritanopia">
+              🔵 蓝黄色盲
+            </button>
+            <button class="theme-btn" data-theme="high-contrast">
+              ⬛ 高对比度
+            </button>
+          </div>
+          <div
+            style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap"
+          >
+            <warm-button elder-friendly>主题测试按钮</warm-button>
+            <warm-card style="flex: 1; min-width: 140px">
+              <warm-text size="body">卡片内容跟随主题变化</warm-text>
+            </warm-card>
+          </div>
+        </div>
+        <div class="demo-code">
+          <span class="cmt">// 切换为红绿色盲主题</span><br />
+          <span class="kw">import</span> { applyTheme }
+          <span class="kw">from</span>
+          <span class="str">'@warm-ui/components'</span>;<br />
+          <span class="kw">applyTheme</span>(<span class="str"
+            >'deuteranopia'</span
+          >);
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- LAYER 2: 认知辅助 -->
+    <!-- ================================================================ -->
+    <section class="section" id="layer2">
+      <div class="section-header">
+        <h2>🧠 第二层：认知辅助</h2>
+        <p>
+          老人不是"不想用"，而是"看不懂" — 这是 WarmUI 超越现有组件库的核心层。
+        </p>
+      </div>
+
+      <!-- warm-translator -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-translator&gt; 大白话翻译器</h3>
+          <span class="badge">L2 认知辅助</span>
+        </div>
+        <div class="desc">
+          悬停或长按复杂文案，自动弹出"说人话"气泡。把官方用语转为老人能听懂的语言。
+        </div>
+        <div class="demo-area">
+          <div style="margin-bottom: 16px">
+            <warm-translator
+              translation="就是让您确认一下，是您本人在操作，不是别人在盗用您的账号"
+            >
+              请您核实身份信息以确保账户安全。
+            </warm-translator>
+          </div>
+          <div>
+            <warm-translator
+              translation="确认您提交的资料都没问题后，再点击发送按钮"
+            >
+              请确认提交信息的准确性后执行后续操作。
+            </warm-translator>
+          </div>
+          <div style="margin-top: 8px; font-size: 0.85rem; color: #999">
+            💡 鼠标悬停或长按文字，查看"说人话"效果
+          </div>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-translator</span>
+          <span class="attr">translation</span>=<span class="str"
+            >"就是让您确认是本人操作"</span
+          >&gt;<br />
+          &nbsp;&nbsp;请您核实身份信息以确保账户安全。<br />
+          &lt;/<span class="tag">warm-translator</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-guide -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-guide&gt; 下一步引导浮层</h3>
+          <span class="badge">L2 认知辅助</span>
+        </div>
+        <div class="desc">
+          老人进入新页面时常迷茫。呼吸动画的高亮光圈 +
+          语音提示，温和地告诉他们下一步该做什么。
+        </div>
+        <div class="demo-area">
+          <div
+            id="guideTarget"
+            style="
+              padding: 20px;
+              background: #f0f7ff;
+              border-radius: 12px;
+              text-align: center;
+              border: 2px dashed var(--warm-primary);
+            "
+          >
+            <warm-text size="body">🎯 我是目标按钮（#guideTarget）</warm-text>
+          </div>
+          <div class="demo-controls" style="margin-top: 16px">
+            <warm-button id="showGuideBtn">显示引导浮层</warm-button>
+            <warm-button id="hideGuideBtn">关闭引导</warm-button>
+          </div>
+          <warm-guide id="guideDemo" voice="false" style="display: none">
+            您办完这个业务，点下面这个蓝色按钮就能完成。
+          </warm-guide>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-guide</span>
+          <span class="attr">overlay</span>
+          <span class="attr">target</span>=<span class="str">"#submitBtn"</span
+          >&gt;<br />
+          &nbsp;&nbsp;点这个蓝色按钮就能完成。<br />
+          &lt;/<span class="tag">warm-guide</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-rescue -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-rescue&gt; 迷路救援</h3>
+          <span class="badge">L2 认知辅助</span>
+        </div>
+        <div class="desc">
+          浮动救生圈按钮常驻右下角，点击展开后支持语音输入，自动匹配目标页面。下方是展开后的演示。
+        </div>
+        <div class="demo-area">
+          <warm-rescue
+            pages='[{"name":"首页","keywords":["首页","回去","主页"]},{"name":"挂号","keywords":["挂号","看病","预约","医生"]},{"name":"缴费","keywords":["缴费","付费","付钱","账单"]}]'
+            id="rescueDemo"
+          >
+            <span slot="page">体验站首页</span>
+            <warm-button onclick="alert('即将跳转首页')"
+              >返回首页 🏠</warm-button
+            >
+            <warm-button onclick="alert('即将跳转客服')"
+              >联系客服 💬</warm-button
+            >
+          </warm-rescue>
+          <div style="font-size: 0.85rem; color: #999; margin-top: 8px">
+            💡 点击下方"显示悬浮救援"按钮，右下角会出现浮动按钮
+          </div>
+        </div>
+        <div class="demo-controls">
+          <warm-button id="showRescueFloatBtn">
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              style="vertical-align: -0.15em; margin-right: 2px"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="6" />
+              <line x1="12" y1="2" x2="12" y2="6" />
+              <line x1="12" y1="18" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="6" y2="12" />
+              <line x1="18" y1="12" x2="22" y2="12" />
+            </svg>
+            显示悬浮救援
+          </warm-button>
+          <warm-button id="hideRescueFloatBtn">隐藏悬浮救援</warm-button>
+        </div>
+        <div class="demo-code" style="margin-top: 8px">
+          &lt;<span class="tag">warm-rescue</span>
+          <span class="attr">float</span> <span class="attr">pages</span>=<span
+            class="str"
+            >'[{"name":"首页","keywords":["首页","回去"]}]'</span
+          >&gt;<br />
+          &nbsp;&nbsp;&lt;<span class="tag">warm-button</span
+          >&gt;返回首页&lt;/<span class="tag">warm-button</span>&gt;<br />
+          &lt;/<span class="tag">warm-rescue</span>&gt;
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- LAYER 3: 情感连接 -->
+    <!-- ================================================================ -->
+    <section class="section" id="layer3">
+      <div class="section-header">
+        <h2>💬 第三层：情感连接</h2>
+        <p>
+          技术有温度 — 这是 WarmUI 名称的由来。让每一个操作都传递尊重与关怀。
+        </p>
+      </div>
+
+      <!-- warm-note -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-note&gt; 家人的便签</h3>
+          <span class="badge">L3 情感连接</span>
+        </div>
+        <div class="desc">
+          子女在应用的任意页面给父母留下便签。点击按钮创建一个示例便签。
+        </div>
+        <div class="demo-area">
+          <div id="noteContainer">
+            <warm-note type="reminder" time="今天 09:30" dismissable>
+              明天上午 10 点记得去医院复查哦！
+              <span slot="author">女儿 小美</span>
+            </warm-note>
+          </div>
+          <div class="demo-controls" style="margin-top: 12px">
+            <warm-button id="addNoteBtn">添加鼓励便签 ❤️</warm-button>
+            <warm-button id="addTipBtn">添加提示便签 💡</warm-button>
+          </div>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-note</span>
+          <span class="attr">type</span>=<span class="str">"reminder"</span>
+          <span class="attr">dismissable</span>&gt;<br />
+          &nbsp;&nbsp;明天上午 10 点记得去医院复查哦！<br />
+          &nbsp;&nbsp;&lt;<span class="tag">span</span>
+          <span class="attr">slot</span>=<span class="str">"author"</span
+          >&gt;女儿 小美&lt;/<span class="tag">span</span>&gt;<br />
+          &lt;/<span class="tag">warm-note</span>&gt;
+        </div>
+      </div>
+
+      <!-- warm-praise -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-praise&gt; 完成夸赞微动效</h3>
+          <span class="badge">L3 情感连接</span>
+        </div>
+        <div class="desc">
+          老人完成挂号/缴费后，一朵小花绽放 + 五彩纸屑 +
+          真诚的语音鼓励。不"哄小孩"，而是平等的赞美。
+        </div>
+        <div class="demo-area">
+          <div class="praise-trigger-area">
+            <warm-button elder-friendly id="praiseBtn"
+              >🌸 模拟完成任务</warm-button
+            >
+            <warm-button id="praiseHideBtn">关闭夸赞</warm-button>
+          </div>
+          <warm-praise id="praiseDemo" voice="false" style="display: none">
+            <span slot="message">您真棒，又学会一个新技能！</span>
+            <span slot="sub">搞定啦！比上次更快了 🎉</span>
+          </warm-praise>
+          <div style="margin-top: 12px; font-size: 0.85rem; color: #999">
+            💡 点击上方按钮，观察花朵绽放和五彩纸屑效果
+          </div>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-praise</span>
+          <span class="attr">id</span>=<span class="str">"praise"</span
+          >&gt;<br />
+          &nbsp;&nbsp;&lt;<span class="tag">span</span>
+          <span class="attr">slot</span>=<span class="str">"message"</span
+          >&gt;您真棒！&lt;/<span class="tag">span</span>&gt;<br />
+          &lt;/<span class="tag">warm-praise</span>&gt;<br />
+          <span class="kw">document</span>.getElementById(<span class="str"
+            >'praise'</span
+          >).show();
+        </div>
+      </div>
+
+      <!-- warm-buddy -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>&lt;warm-buddy&gt; 老友模式联机协助</h3>
+          <span class="badge">L3 情感连接</span>
+        </div>
+        <div class="desc">
+          远程协助不再可怕。老人生成一次性安全码，子女输入后在自己的手机上点击指引，老人屏幕上出现高亮光圈和语音说明。
+        </div>
+        <div class="demo-area">
+          <div class="buddy-mini-demo">
+            <div>
+              <div class="role">👴 老人端</div>
+              <warm-buddy id="buddyDemo"></warm-buddy>
+            </div>
+            <div>
+              <div class="role">👩 子女端（模拟）</div>
+              <div style="padding: 12px; text-align: center">
+                <warm-text size="body">点击下方模拟远程指引</warm-text>
+                <div
+                  class="demo-controls"
+                  style="margin-top: 10px; justify-content: center"
+                >
+                  <warm-button id="buddyGuideBtn">高亮底部按钮</warm-button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 12px; font-size: 0.85rem; color: #999">
+            💡 老人端点击"生成安全码"，子女端输入后即可建立连接
+          </div>
+        </div>
+        <div class="demo-code">
+          &lt;<span class="tag">warm-buddy</span>
+          <span class="attr">id</span>=<span class="str">"buddy"</span
+          >&gt;&lt;/<span class="tag">warm-buddy</span>&gt;<br />
+          <span class="cmt">// 子女端远程指引</span><br />
+          buddy.highlightTarget(<span class="str">'#submitBtn'</span>,
+          <span class="str">'点这个蓝色按钮完成'</span>);
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- LAYER 4: 开发者工具 -->
+    <!-- ================================================================ -->
+    <section class="section" id="layer4">
+      <div class="section-header">
+        <h2>🔧 第四层：开发者工具</h2>
+        <p>让产品和开发者感同身受，让无障碍检查自动化。</p>
+      </div>
+
+      <!-- Simulator -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>👁️ 老龄化模拟器（浏览器插件版）</h3>
+          <span class="badge">L4 开发者工具</span>
+        </div>
+        <div class="desc">
+          一键切换视角，体验老年人在使用当前页面时可能遇到的障碍。点击下方模式，页面会实时应用模拟效果。
+        </div>
+        <div class="demo-area">
+          <div style="margin-bottom: 16px">
+            <warm-text size="body" style="font-weight: 500"
+              >🔄 当前模拟模式：</warm-text
+            >
+          </div>
+          <div style="margin-bottom: 16px"><strong>👓 视觉模拟</strong></div>
+          <div class="sim-grid" style="margin-bottom: 16px">
+            <label class="sim-item"
+              ><input type="checkbox" class="sim-cb" data-sim="vision-blur" />
+              🌫 模糊视觉</label
+            >
+            <label class="sim-item"
+              ><input type="checkbox" class="sim-cb" data-sim="vision-yellow" />
+              🟡 黄化视觉</label
+            >
+            <label class="sim-item"
+              ><input type="checkbox" class="sim-cb" data-sim="vision-tunnel" />
+              🔘 管状视野</label
+            >
+            <label class="sim-item"
+              ><input
+                type="checkbox"
+                class="sim-cb"
+                data-sim="vision-contrast"
+              />
+              ◐ 对比度下降</label
+            >
+          </div>
+          <div style="margin-bottom: 16px"><strong>🖐️ 触觉模拟</strong></div>
+          <div class="sim-grid" style="margin-bottom: 16px">
+            <label class="sim-item"
+              ><input type="checkbox" class="sim-cb" data-sim="motor-tremor" />
+              🖐 手抖（页面抖动）</label
+            >
+            <label class="sim-item"
+              ><input type="checkbox" class="sim-cb" data-sim="motor-reduced" />
+              🖐 精细动作减弱</label
+            >
+          </div>
+          <div class="demo-controls">
+            <warm-button id="applySimBtn" elder-friendly
+              >应用到本页 ▶</warm-button
+            >
+            <warm-button id="resetSimBtn">重置 ✕</warm-button>
+          </div>
+          <div
+            id="simStatus"
+            style="margin-top: 10px; font-size: 0.85rem; color: #999"
+          ></div>
+        </div>
+        <div class="demo-code">
+          <span class="cmt">// 浏览器插件一键切换</span><br />
+          <span class="kw">const</span> config = {
+          <span class="str">'vision-blur'</span>: { filter:
+          <span class="str">'blur(2px)'</span> } };<br />
+          applySimulation(config); <span class="cmt">// 应用模拟效果</span>
+        </div>
+      </div>
+
+      <!-- Checker -->
+      <div class="demo-card">
+        <div class="demo-card-header">
+          <h3>📋 一键合规检查</h3>
+          <span class="badge">L4 开发者工具</span>
+        </div>
+        <div class="desc">
+          自动检查页面是否满足无障碍规范：触控区域 ≥44x44dp、对比度 AAA 级、图片
+          alt 替代文本、年龄歧视逻辑。
+        </div>
+        <div class="demo-area">
+          <div class="demo-controls">
+            <warm-button id="runCheckerBtn" elder-friendly
+              >运行合规检查 ▶</warm-button
+            >
+          </div>
+          <div id="checkerOutput"></div>
+        </div>
+        <div class="demo-code">
+          <span class="kw">import</span> { runAccessibilityCheck, formatReport }
+          <span class="kw">from</span>
+          <span class="str">'@warm-ui/components'</span>;<br />
+          <span class="kw">const</span> report =
+          <span class="kw">await</span> runAccessibilityCheck();<br />
+          console.log(formatReport(report));
+        </div>
+      </div>
+    </section>
+
+    <footer class="demo-footer">
+      <p>☀️ <strong>WarmUI</strong> — 为长辈而生的适老化体验增强层</p>
+      <p style="margin-top: 8px">
+        <a href="https://github.com/user/warm-ui">GitHub 仓库</a> ·
+        <a href="https://github.com/user/warm-ui">文档站点</a> · MIT License
+      </p>
+    </footer>
+
+    <!-- ============ SCRIPTS ============ -->
+    <script type="module">
+      // ===== 动态导入所有组件 =====
+      const module = await import("../packages/components/src/index.js");
+      const {
+        applyTheme,
+        getAvailableThemes,
+        runAccessibilityCheck,
+        formatReport,
+      } = module;
+
+      // ===== NAV 切换 =====
+      const navLinks = document.querySelectorAll(".layer-nav a");
+      const sections = document.querySelectorAll(".section");
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          navLinks.forEach((l) => l.classList.remove("active"));
+          link.classList.add("active");
+          sections.forEach((s) => s.classList.remove("active"));
+          const target = document.querySelector(link.getAttribute("href"));
+          if (target) target.classList.add("active");
+          window.scrollTo({ top: target.offsetTop - 20, behavior: "smooth" });
+        });
+      });
+
+      // ===== warm-button 演示 =====
+      const btnDemo2 = document.getElementById("demoBtn2");
+      const btnToggleElder = document.getElementById("btnToggleElder");
+      const btnDebounce = document.getElementById("btnDebounce");
+      const btnTolerance = document.getElementById("btnTolerance");
+      const btnFeedback = document.getElementById("btnFeedback");
+
+      function updateButton() {
+        const isElder = btnToggleElder.checked;
+        btnDemo2.toggleAttribute("elder-friendly", isElder);
+        btnDemo2.setAttribute("debounce-delay", btnDebounce.value);
+        btnDemo2.setAttribute("tolerance", btnTolerance.value);
+      }
+      btnToggleElder.addEventListener("change", updateButton);
+      btnDebounce.addEventListener("change", updateButton);
+      btnTolerance.addEventListener("change", updateButton);
+      updateButton();
+
+      document.querySelectorAll("#demoBtn1, #demoBtn2").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          btnFeedback.textContent = `✅ 点击事件触发 (${new Date().toLocaleTimeString()})`;
+          setTimeout(() => {
+            btnFeedback.textContent = "";
+          }, 2000);
+        });
+      });
+
+      // ===== warm-text 演示 =====
+      const textSizeSelect = document.getElementById("textSizeSelect");
+      const textLevel = document.getElementById("textLevel");
+      const textLevelLabel = document.getElementById("textLevelLabel");
+      const textLivePreview = document.getElementById("textLivePreview");
+
+      textSizeSelect.addEventListener("change", () => {
+        textLivePreview.setAttribute("size", textSizeSelect.value);
+      });
+      textLevel.addEventListener("input", () => {
+        const val = parseInt(textLevel.value);
+        textLevelLabel.textContent = val;
+        if (val > 0) {
+          textLivePreview.setAttribute("level", val);
+        } else {
+          textLivePreview.removeAttribute("level");
+        }
+      });
+
+      // ===== warm-theme 演示 =====
+      document.querySelectorAll(".theme-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".theme-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          applyTheme(btn.dataset.theme);
+        });
+      });
+
+      // ===== warm-guide 演示 =====
+      const guideDemo = document.getElementById("guideDemo");
+      document.getElementById("showGuideBtn").addEventListener("click", () => {
+        guideDemo.style.display = "block";
+        guideDemo.showWithTarget("#guideTarget");
+      });
+      document.getElementById("hideGuideBtn").addEventListener("click", () => {
+        guideDemo.dismiss();
+        guideDemo.style.display = "none";
+      });
+
+      // ===== warm-rescue 演示 =====
+      const rescueDemo = document.getElementById("rescueDemo");
+      document
+        .getElementById("showRescueFloatBtn")
+        .addEventListener("click", () => {
+          rescueDemo.setAttribute("float", "");
+          rescueDemo.expand();
+        });
+      document
+        .getElementById("hideRescueFloatBtn")
+        .addEventListener("click", () => {
+          rescueDemo.removeAttribute("float");
+          rescueDemo.collapse();
+        });
+
+      // ===== warm-note 演示 =====
+      const noteContainer = document.getElementById("noteContainer");
+      document.getElementById("addNoteBtn").addEventListener("click", () => {
+        const note = document.createElement("warm-note");
+        note.setAttribute("type", "encourage");
+        note.setAttribute("time", new Date().toLocaleString());
+        note.setAttribute("dismissable", "");
+        note.innerHTML = `别着急，慢慢来，您做得非常好！❤️<span slot="author">儿子 大明</span>`;
+        noteContainer.appendChild(note);
+        noteContainer.scrollTop = noteContainer.scrollHeight;
+      });
+      document.getElementById("addTipBtn").addEventListener("click", () => {
+        const note = document.createElement("warm-note");
+        note.setAttribute("type", "tip");
+        note.setAttribute("time", new Date().toLocaleString());
+        note.setAttribute("dismissable", "");
+        note.innerHTML = `点绿色按钮是确认，点红色按钮是取消，别担心点错了也没关系💡<span slot="author">孙女 小芳</span>`;
+        noteContainer.appendChild(note);
+      });
+
+      // ===== warm-praise 演示 =====
+      const praiseDemo = document.getElementById("praiseDemo");
+      const praiseBtn = document.getElementById("praiseBtn");
+      const praiseHideBtn = document.getElementById("praiseHideBtn");
+
+      praiseBtn.addEventListener("click", () => {
+        praiseDemo.style.display = "block";
+        const idx = Math.floor(Math.random() * 5);
+        praiseDemo.show(idx);
+      });
+      praiseHideBtn.addEventListener("click", () => {
+        praiseDemo.hide();
+        setTimeout(() => {
+          praiseDemo.style.display = "none";
+        }, 400);
+      });
+
+      // ===== Simulator 演示 =====
+      function applyPageSimulation() {
+        const checked = document.querySelectorAll(".sim-cb:checked");
+        const filters = [];
+        checked.forEach((cb) => {
+          const sim = cb.dataset.sim;
+          const configs = {
+            "vision-blur": "blur(2px)",
+            "vision-yellow": "sepia(0.6) saturate(0.8)",
+            "vision-tunnel": null,
+            "vision-contrast": "contrast(0.65) brightness(1.1)",
+            "motor-tremor": null,
+            "motor-reduced": null,
+          };
+          const filter = configs[sim];
+          if (filter) filters.push(filter);
+        });
+
+        const html = document.documentElement;
+        if (filters.length > 0) {
+          html.style.filter = filters.join(" ");
+        } else {
+          html.style.filter = "";
+        }
+
+        // 管状视野
+        const tunnelSim = document.querySelector('[data-sim="vision-tunnel"]');
+        html.style.clipPath = tunnelSim?.checked
+          ? "circle(30% at 50% 50%)"
+          : "";
+
+        // 手抖
+        const tremorSim = document.querySelector('[data-sim="motor-tremor"]');
+        html.style.animation = tremorSim?.checked
+          ? "simTremor 0.1s infinite"
+          : "";
+
+        const status = document.getElementById("simStatus");
+        const count = checked.length;
+        status.textContent =
+          count > 0 ? `✅ 已应用 ${count} 种模拟模式` : "已重置所有模拟效果";
+      }
+
+      // 注入手抖动画
+      const simStyle = document.createElement("style");
+      simStyle.textContent = `
+    @keyframes simTremor {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(1px, -0.5px); }
+      50% { transform: translate(-0.5px, 1px); }
+      75% { transform: translate(-1px, 0.5px); }
+      100% { transform: translate(0.5px, -0.5px); }
+    }
+  `;
+      document.head.appendChild(simStyle);
+
+      document
+        .getElementById("applySimBtn")
+        .addEventListener("click", applyPageSimulation);
+      document.getElementById("resetSimBtn").addEventListener("click", () => {
+        document
+          .querySelectorAll(".sim-cb")
+          .forEach((cb) => (cb.checked = false));
+        document.documentElement.style.filter = "";
+        document.documentElement.style.clipPath = "";
+        document.documentElement.style.animation = "";
+        document.getElementById("simStatus").textContent = "";
+      });
+
+      // ===== Checker 演示 =====
+      document
+        .getElementById("runCheckerBtn")
+        .addEventListener("click", async () => {
+          const output = document.getElementById("checkerOutput");
+          output.style.display = "block";
+          output.textContent = "⏳ 正在检查...";
+          try {
+            const report = await runAccessibilityCheck();
+            output.textContent = formatReport(report);
+          } catch (err) {
+            output.textContent = `❌ 检查出错：${err.message}`;
+          }
+        });
+
+      // ===== Buddy 演示 =====
+      const buddyDemo = document.getElementById("buddyDemo");
+      document.getElementById("buddyGuideBtn").addEventListener("click", () => {
+        const footer = document.querySelector(".demo-footer");
+        if (footer) {
+          buddyDemo.highlightTarget(".demo-footer", "这个区域是页脚信息");
+          setTimeout(() => buddyDemo.clearHighlight(), 4000);
+        }
+      });
+
+      // 清理初始化
+      console.log("☀️ WarmUI 全功能体验站已加载");
+    </script>
+  </body>
+</html>

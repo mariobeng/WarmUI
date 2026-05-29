@@ -1,73 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WarmUI 老龄化模拟器</title>
-  <link rel="stylesheet" href="popup.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>👁️ 老龄化模拟器</h1>
-    <p class="desc">模拟老年人在使用当前页面时可能遇到的障碍</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WarmUI 老龄化模拟器</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>👁️ 老龄化模拟器</h1>
+      <p class="desc">模拟老年人在使用当前页面时可能遇到的障碍</p>
 
-    <div class="section">
-      <h2>👓 视觉模拟</h2>
-      <label>
-        <input type="checkbox" id="vision-blur" />
-        模糊视觉
-      </label>
-      <label>
-        <input type="checkbox" id="vision-yellow" />
-        黄化视觉（晶状体变黄）
-      </label>
-      <label>
-        <input type="checkbox" id="vision-tunnel" />
-        管状视野
-      </label>
-      <label>
-        <input type="checkbox" id="vision-contrast" />
-        对比度下降
-      </label>
-    </div>
+      <div class="section">
+        <h2>👓 视觉模拟</h2>
+        <label>
+          <input type="checkbox" id="vision-blur" />
+          模糊视觉
+        </label>
+        <label>
+          <input type="checkbox" id="vision-yellow" />
+          黄化视觉（晶状体变黄）
+        </label>
+        <label>
+          <input type="checkbox" id="vision-tunnel" />
+          管状视野
+        </label>
+        <label>
+          <input type="checkbox" id="vision-contrast" />
+          对比度下降
+        </label>
+      </div>
 
-    <div class="section">
-      <h2>🖐️ 触觉模拟</h2>
-      <label>
-        <input type="checkbox" id="motor-tremor" />
-        手抖模式（页面抖动）
-      </label>
-      <label>
-        <input type="checkbox" id="motor-tremor-cursor" />
-        手抖模式（光标抖动）
-      </label>
-      <label>
-        <input type="checkbox" id="motor-reduced" />
-        精细动作减弱
-      </label>
-    </div>
+      <div class="section">
+        <h2>🖐️ 触觉模拟</h2>
+        <label>
+          <input type="checkbox" id="motor-tremor" />
+          手抖模式（页面抖动）
+        </label>
+        <label>
+          <input type="checkbox" id="motor-tremor-cursor" />
+          手抖模式（光标抖动）
+        </label>
+        <label>
+          <input type="checkbox" id="motor-reduced" />
+          精细动作减弱
+        </label>
+      </div>
 
-    <div class="section">
-      <h2>🧠 认知模拟</h2>
-      <label>
-        <input type="checkbox" id="cognitive-speed" />
-        信息处理变慢
-      </label>
-      <label>
-        <input type="checkbox" id="cognitive-distraction" />
-        注意力易分散
-      </label>
-      <label>
-        <input type="checkbox" id="cognitive-degrade" />
-        认知降级（图标隐藏+术语替换）
-      </label>
-    </div>
+      <div class="section">
+        <h2>🧠 认知模拟</h2>
+        <label>
+          <input type="checkbox" id="cognitive-speed" />
+          信息处理变慢
+        </label>
+        <label>
+          <input type="checkbox" id="cognitive-distraction" />
+          注意力易分散
+        </label>
+        <label>
+          <input type="checkbox" id="cognitive-degrade" />
+          认知降级（图标隐藏+术语替换）
+        </label>
+      </div>
 
-    <div class="actions">
-      <button id="applyBtn" class="btn-primary">应用到当前页面</button>
-      <button id="resetBtn" class="btn-secondary">重置</button>
+      <div id="statusMsg" class="status-message"></div>
+
+      <div class="actions">
+        <button id="applyBtn" class="btn-primary">应用到当前页面</button>
+        <button id="resetBtn" class="btn-secondary">重置</button>
+      </div>
     </div>
-  </div>
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>
