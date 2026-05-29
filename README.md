@@ -20,33 +20,34 @@
 
 | 组件                              | 解决的问题                             | 技术亮点                                           |
 | --------------------------------- | -------------------------------------- | -------------------------------------------------- |
-| **动态字号引擎** `warm-text`      | 不是全局放大，而是根据内容类型智能分级 | 语义级别：heading/body/button/caption + level 缩放 |
+| **动态字号引擎** `warm-text`      | 不是全局放大，而是根据内容类型智能分级 | 语义级别：heading/body/button/caption/large + level 缩放 |
 | **防抖触控区** `warm-button`      | 老人手抖导致误触                       | 可配置防抖延迟 + 触控容差区域                      |
 | **语音朗读增强版** `warm-speech`  | 不仅仅是 TTS，还能把页面结构"读"出来   | 自动生成页面大纲，自然语言朗读                     |
-| **高对比度动态配色** `warm-theme` | 色弱/低视力用户看不清                  | 预设红绿色盲、蓝黄色盲、高对比度等 5 套主题        |
+| **高对比度动态配色** `warm-theme` | 色弱/低视力用户看不清                  | 预设红绿色盲（绿色弱/红色弱）、蓝黄色盲、高对比度等 5 套主题 |
 
 ### 🧠 第二层：认知辅助
 
 | 组件                               | 解决的问题                     | 技术亮点                                  |
 | ---------------------------------- | ------------------------------ | ----------------------------------------- |
-| **大白话翻译器** `warm-translator` | 复杂文案老人看不懂             | 长按/悬停弹出"说人话"气泡，接入大模型 API |
-| **下一步引导** `warm-guide`        | 老人进新页面不知道按哪儿       | 呼吸动画高亮光圈 + 语音提示，可一键关闭   |
-| **迷路救援** `warm-rescue`         | 老人不知道自己在哪儿、怎么回去 | 浮动救生圈按钮 + 语音输入 + AI 导航匹配   |
+| **大白话翻译器** `warm-translator` | 复杂文案老人看不懂             | 悬停/长按弹出"说人话"气泡，支持静态翻译和 API 动态翻译 |
+| **下一步引导** `warm-guide`        | 老人进新页面不知道按哪儿       | 呼吸动画高亮光圈 + 遮罩层 + 语音提示，可一键关闭   |
+| **迷路救援** `warm-rescue`         | 老人不知道自己在哪儿、怎么回去 | 浮动救生圈按钮 + 语音输入 + 关键词导航匹配   |
 
 ### 💬 第三层：情感连接
 
 | 组件                       | 解决的问题                 | 技术亮点                                           |
 | -------------------------- | -------------------------- | -------------------------------------------------- |
-| **家人的便签** `warm-note` | 子女想给父母留言提醒       | 远程便签系统，支持 4 种类型（提醒/提示/注意/鼓励） |
+| **家人的便签** `warm-note` | 子女想给父母留言提醒       | 远程便签系统，支持 4 种类型（提醒/提示/注意/鼓励），可关闭 |
 | **完成夸赞** `warm-praise` | 老人完成操作需要正反馈     | 花朵绽放 + 五彩纸屑 + 语音鼓励，平等的语气         |
-| **老友模式** `warm-buddy`  | 远程协助对老人来说太难描述 | 一次性安全码 + 静态截图 + 高亮指引 + 语音说明      |
+| **老友模式** `warm-buddy`  | 远程协助对老人来说太难描述 | 一次性安全码 + 高亮指引 + 语音说明，5 分钟自动过期  |
 
 ### 🔧 第四层：开发者工具
 
 | 工具                            | 解决的问题             | 技术亮点                                   |
 | ------------------------------- | ---------------------- | ------------------------------------------ |
-| **老龄化模拟器（浏览器插件）**  | 开发者无法感同身受     | 一键切换：视力衰退 / 手抖光标 / 认知降级   |
-| **一键合规检查** `warm-checker` | 产品难以达到无障碍标准 | 自动检查触控区域 / 对比度 / alt / 年龄歧视 |
+| **老龄化模拟器**（浏览器插件）  | 开发者无法感同身受     | 9 种模拟：4 视觉 + 3 触觉 + 3 认知        |
+| **适老化助手**（浏览器插件）    | 任何网页一键适老化     | 6 种增强器 + 5 种预设场景，面向老人直接使用 |
+| **一键合规检查** `warm-checker` | 产品难以达到无障碍标准 | 4 项自动检查：触控区域 / 对比度 / alt / 年龄歧视 |
 
 ---
 
@@ -95,6 +96,8 @@ import {
   WarmGuide,
   WarmTranslator,
   WarmPraise,
+  applyTheme,
+  runAccessibilityCheck,
 } from "@warm-ui/react";
 
 function App() {
@@ -123,44 +126,315 @@ npm install @warm-ui/vue
 </template>
 
 <script setup>
-import { WarmButton, WarmText } from "@warm-ui/vue";
+import { WarmButton, WarmText, applyTheme } from "@warm-ui/vue";
 </script>
 ```
 
 ---
 
-## 组件列表
+## 组件 API
 
 ### 核心组件
 
-| 组件   | 标签名          | 说明                                    |
-| ------ | --------------- | --------------------------------------- |
-| Button | `<warm-button>` | 适老化按钮，防抖触控 + 容差区域         |
-| Text   | `<warm-text>`   | 动态字号引擎，支持语义级别              |
-| Card   | `<warm-card>`   | 卡片容器，支持高亮模式                  |
-| Dialog | `<warm-dialog>` | 温和对话框，防误触                      |
-| Toast  | `<warm-toast>`  | 轻提示，支持 success/error 类型         |
-| Guide  | `<warm-guide>`  | 下一步引导，呼吸动画高亮 + 语音         |
-| Note   | `<warm-note>`   | 家人便签，支持远程便签系统              |
-| Rescue | `<warm-rescue>` | 迷路救援，浮动按钮 + 语音输入 + AI 导航 |
+#### WarmButton — 适老化按钮
+
+| 属性             | 类型    | 默认值 | 说明                                     |
+| ---------------- | ------- | ------ | ---------------------------------------- |
+| `elder-friendly` | Boolean | false  | 开启适老模式（放大按钮 + 默认防抖 300ms + 容差 12px） |
+| `debounce-delay` | Number  | 0      | 防抖延迟（毫秒），elder-friendly 时默认 300 |
+| `tolerance`      | Number  | 0      | 触控容差区域（像素），elder-friendly 时默认 12 |
+| `disabled`       | Boolean | false  | 禁用按钮                                 |
+
+| 事件         | 说明               |
+| ------------ | ------------------ |
+| `warm-click` | 按钮点击（已过防抖） |
+
+#### WarmText — 动态字号引擎
+
+| 属性    | 类型   | 默认值  | 说明                                                       |
+| ------- | ------ | ------- | ---------------------------------------------------------- |
+| `size`  | String | `body`  | 语义级别：`heading` / `body` / `button` / `caption` / `large` / `normal` |
+| `level` | Number | -       | 缩放级别，每级增加 8% 字号                                 |
+| `plain` | Boolean | false  | 次要文本样式（颜色变浅）                                   |
+
+#### WarmCard — 卡片容器
+
+| 属性        | 类型    | 默认值 | 说明                   |
+| ----------- | ------- | ------ | ---------------------- |
+| `highlight` | Boolean | false  | 高亮模式（蓝色边框阴影） |
+
+#### WarmDialog — 温和对话框
+
+| 属性               | 类型    | 默认值 | 说明                           |
+| ------------------ | ------- | ------ | ------------------------------ |
+| `open`             | Boolean | false  | 是否显示                       |
+| `close-on-overlay` | Boolean | false  | 点击遮罩层是否关闭（默认防误触不关闭） |
+
+| 方法   | 说明     |
+| ------ | -------- |
+| `open()`   | 打开对话框 |
+| `close()`  | 关闭对话框 |
+
+| 事件               | 说明       |
+| ------------------ | ---------- |
+| `warm-dialog-open`  | 对话框打开 |
+| `warm-dialog-close` | 对话框关闭 |
+
+| 插槽      | 说明     |
+| --------- | -------- |
+| `header`  | 标题区域 |
+| 默认插槽  | 内容区域 |
+| `footer`  | 底部操作区 |
+
+#### WarmToast — 轻提示
+
+| 属性   | 类型   | 默认值 | 说明                              |
+| ------ | ------ | ------ | --------------------------------- |
+| `show` | Boolean | false | 是否显示                          |
+| `type` | String | -      | 类型：`success` / `error`，默认无 |
+
+| 方法            | 说明                           |
+| --------------- | ------------------------------ |
+| `show(duration)` | 显示提示，默认 3000ms 后自动隐藏 |
+| `hide()`         | 隐藏提示                       |
+
+#### WarmGuide — 下一步引导
+
+| 属性     | 类型    | 默认值 | 说明                                       |
+| -------- | ------- | ------ | ------------------------------------------ |
+| `overlay` | Boolean | false | 全屏遮罩模式，引导浮层显示在页面底部中央   |
+| `target` | String  | -      | CSS 选择器，高亮目标元素（呼吸动画光圈）   |
+| `voice`  | Boolean | true   | 是否自动语音朗读引导文字                   |
+
+| 方法                 | 说明                       |
+| -------------------- | -------------------------- |
+| `dismiss()`           | 关闭引导和高亮             |
+| `showWithTarget(sel)` | 显示引导并高亮指定目标元素 |
+
+| 事件                  | 说明     |
+| --------------------- | -------- |
+| `warm-guide-dismiss`   | 引导关闭 |
+
+#### WarmNote — 家人便签
+
+| 属性          | 类型    | 默认值     | 说明                                       |
+| ------------- | ------- | ---------- | ------------------------------------------ |
+| `type`        | String  | `reminder` | 便签类型：`reminder` / `tip` / `warning` / `encourage` |
+| `author`      | String  | -          | 留言人                                     |
+| `time`        | String  | -          | 留言时间                                   |
+| `note-id`     | String  | -          | 便签 ID，用于远程便签存取                  |
+| `remote`      | String  | -          | 远程便签标记，`own` 表示可删除             |
+| `dismissable` | Boolean | false      | 显示"我知道了"关闭按钮                     |
+
+| 事件                 | 说明                   |
+| -------------------- | ---------------------- |
+| `warm-note-dismiss`   | 点击"我知道了"关闭便签 |
+
+| 静态方法                      | 说明                   |
+| ----------------------------- | ---------------------- |
+| `WarmNote.saveRemoteNote(id, data)` | 保存远程便签到 localStorage |
+| `WarmNote.listRemoteNotes()`        | 获取所有远程便签列表       |
+
+#### WarmRescue — 迷路救援
+
+| 属性    | 类型    | 默认值 | 说明                                           |
+| ------- | ------- | ------ | ---------------------------------------------- |
+| `float` | Boolean | false  | 浮动模式，右下角圆形按钮，点击展开完整面板     |
+| `pages` | String  | -      | JSON 数组，可导航页面列表 `[{name, keywords}]` |
+
+| 方法       | 说明         |
+| ---------- | ------------ |
+| `expand()`  | 展开浮动面板 |
+| `collapse()` | 收起浮动面板 |
+
+| 事件                     | 说明                               |
+| ------------------------ | ---------------------------------- |
+| `warm-rescue-navigate`    | 语音导航匹配成功，`detail.matched` 为匹配页面 |
 
 ### 增强组件
 
-| 组件       | 标签名              | 说明                           |
-| ---------- | ------------------- | ------------------------------ |
-| Speech     | `<warm-speech>`     | 语音朗读增强，支持页面大纲朗读 |
-| Translator | `<warm-translator>` | 大白话翻译器，"说人话"气泡     |
-| Praise     | `<warm-praise>`     | 完成夸赞，花朵绽放 + 五彩纸屑  |
-| Buddy      | `<warm-buddy>`      | 老友模式，安全码联机协助       |
+#### WarmSpeech — 语音朗读增强
 
-### 工具模块
+| 属性   | 类型   | 默认值 | 说明                                         |
+| ------ | ------ | ------ | -------------------------------------------- |
+| `text` | String | -      | 要朗读的文字，不设则读取元素文本内容         |
+| `mode` | String | `text` | 朗读模式：`text`（纯文字）/ `outline`（页面大纲） |
+| `lang` | String | `zh-CN` | 朗读语言                                    |
+| `rate` | Number | `0.9`  | 朗读语速                                     |
 
-| 模块    | 路径                                   | 说明                             |
-| ------- | -------------------------------------- | -------------------------------- |
-| Theme   | `src/theme/warm-theme.js`              | 高对比度动态配色系统（5 套主题） |
-| Speech  | `src/speech/speech-adapter.js`         | 语音适配器（TTS + 语音识别）     |
-| Checker | `src/checker/accessibility-checker.js` | 一键合规检查工具                 |
-| API     | `src/utils/api-proxy.js`               | AI 翻译等服务的 API 代理         |
+#### WarmTranslator — 大白话翻译器
+
+| 属性          | 类型   | 默认值 | 说明                                       |
+| ------------- | ------ | ------ | ------------------------------------------ |
+| `translation` | String | -      | 静态翻译文本，不设则调用 API 动态翻译      |
+| `original`    | String | -      | 原文标注，不设则自动取元素文本内容         |
+
+- **桌面端**：悬停 800ms 后弹出翻译气泡
+- **移动端**：长按切换翻译气泡
+
+#### WarmPraise — 完成夸赞
+
+| 属性     | 类型    | 默认值 | 说明                       |
+| -------- | ------- | ------ | -------------------------- |
+| `show`   | Boolean | false  | 是否显示夸赞动画           |
+| `message` | String | -      | 自定义夸赞文字             |
+| `voice`  | Boolean | false  | 是否语音朗读夸赞文字       |
+
+| 方法              | 说明                                          |
+| ----------------- | --------------------------------------------- |
+| `show(index?)`    | 显示夸赞，可传入消息索引（0-4），默认随机     |
+| `hide()`          | 隐藏夸赞                                     |
+
+- 内置 5 条夸赞消息，随机轮换
+- 3.5 秒后自动隐藏，按 Esc 可提前关闭
+
+#### WarmBuddy — 老友模式
+
+| 方法                          | 说明                                     |
+| ----------------------------- | ---------------------------------------- |
+| `highlightTarget(selector, speech)` | 在老人屏幕上高亮目标元素 + 语音说明 |
+| `clearHighlight()`            | 清除高亮指引                             |
+
+| 事件                      | 说明                     |
+| ------------------------- | ------------------------ |
+| `warm-buddy-code`          | 生成安全码，`detail.code` |
+| `warm-buddy-connected`     | 远程协助连接成功         |
+| `warm-buddy-disconnected`  | 断开连接                 |
+
+- 安全码 6 位，5 分钟后自动过期
+- 流程：生成安全码 → 告知家人 → 家人输入安全码 → 连接成功
+
+---
+
+## 工具模块 API
+
+### Theme — 高对比度动态配色
+
+```js
+import { applyTheme, getSavedTheme, getAvailableThemes, THEMES } from "@warm-ui/components";
+```
+
+| 方法/属性            | 说明                                       |
+| -------------------- | ------------------------------------------ |
+| `applyTheme(name)`   | 应用主题到全局，同时保存到 localStorage    |
+| `getSavedTheme()`    | 获取已保存的主题名称，默认 `default`       |
+| `getAvailableThemes()` | 返回所有可用主题列表 `[{id, name}]`      |
+| `THEMES`             | 主题配置对象                               |
+
+**内置主题**：
+
+| 主题 ID          | 名称               |
+| ---------------- | ------------------ |
+| `default`        | 默认主题           |
+| `deuteranopia`   | 红绿色盲（绿色弱） |
+| `protanopia`     | 红绿色盲（红色弱） |
+| `tritanopia`     | 蓝黄色盲           |
+| `high-contrast`  | 高对比度           |
+
+### SpeechAdapter — 语音适配器
+
+```js
+import { SpeechAdapter, speechAdapter } from "@warm-ui/components";
+```
+
+| 方法                                    | 说明                                     |
+| --------------------------------------- | ---------------------------------------- |
+| `speak(text, options?)`                 | 文字转语音朗读                           |
+| `speakOutline(outline, options?)`       | 朗读页面大纲摘要                         |
+| `startRecognition(options)`             | 开始语音识别                             |
+| `stop()`                                | 停止朗读                                 |
+| `registerProvider(name, handler)`       | 注册自定义 TTS 提供商                    |
+| `registerRecognitionProvider(name, handler)` | 注册自定义语音识别提供商            |
+
+| 静态方法                    | 说明                     |
+| --------------------------- | ------------------------ |
+| `SpeechAdapter.isTTSSupported()` | 检测浏览器是否支持 TTS |
+| `SpeechAdapter.isRecognitionSupported()` | 检测浏览器是否支持语音识别 |
+
+**默认实例**：`speechAdapter`，开箱即用。
+
+### Checker — 一键合规检查
+
+```js
+import { runAccessibilityCheck, formatReport, CHECK_RULES } from "@warm-ui/components";
+```
+
+| 方法/属性                        | 说明                                           |
+| -------------------------------- | ---------------------------------------------- |
+| `runAccessibilityCheck(ruleIds?)` | 执行合规检查，返回 Promise<报告对象>          |
+| `formatReport(report)`           | 生成友好的文本格式检查报告                     |
+| `CHECK_RULES`                    | 检查规则数组                                   |
+
+**检查规则**：
+
+| 规则 ID              | 名称         | 级别   | 说明                          |
+| -------------------- | ------------ | ------ | ----------------------------- |
+| `touch-target-size`  | 触控区域大小 | error  | 可点击区域是否 ≥ 44×44dp     |
+| `contrast-ratio`     | 色彩对比度   | error  | 对比度是否达到 AA 级（≥4.5:1） |
+| `alt-text`           | 图片替代文本 | warning | 图片是否有 alt 属性          |
+| `age-discrimination` | 年龄歧视检查 | error  | 是否存在年龄歧视性逻辑        |
+
+### API Proxy — 服务接口代理
+
+```js
+import { translateToPlain, getNavigationSuggestion } from "@warm-ui/components";
+```
+
+| 方法                                   | 说明                     |
+| -------------------------------------- | ------------------------ |
+| `translateToPlain(text, lang?)`        | 大白话翻译 API           |
+| `getNavigationSuggestion(query, pages)` | AI 导航建议 API         |
+
+- 内置速率限制：每分钟最多 20 次请求
+- 需要后端提供 `/api/warm/translate` 和 `/api/warm/navigate` 接口
+
+---
+
+## 浏览器插件
+
+### 老龄化模拟器 `@warm-ui/plugin`
+
+面向开发者的 Chrome 扩展，一键模拟老年人在使用 Web 产品时的真实体验。
+
+**9 种模拟模式**：
+
+| 类别     | 模式             | 说明                       |
+| -------- | ---------------- | -------------------------- |
+| 👓 视觉  | 模糊视觉         | 模拟老花眼视力衰退         |
+| 👓 视觉  | 黄化视觉         | 模拟晶状体变黄             |
+| 👓 视觉  | 管状视野         | 模拟周边视力丧失           |
+| 👓 视觉  | 对比度下降       | 模拟对比敏感度降低         |
+| 🖐️ 触觉 | 手抖（页面抖动） | 模拟手部震颤对阅读的影响   |
+| 🖐️ 触觉 | 手抖（光标抖动） | 模拟手部震颤对操作的影响   |
+| 🖐️ 触觉 | 精细动作减弱     | 模拟手指灵活性下降         |
+| 🧠 认知  | 信息处理变慢     | 模拟认知处理速度降低       |
+| 🧠 认知  | 注意力易分散     | 模拟注意力难以集中         |
+| 🧠 认知  | 认知降级         | 隐藏图标 + 替换术语        |
+
+### 适老化助手 `@warm-ui/elder-plugin`
+
+面向老人直接使用的 Chrome 扩展，让任何网页一键变得适合长辈阅读和操作。
+
+**5 种预设场景**：
+
+| 场景       | 说明                               |
+| ---------- | ---------------------------------- |
+| 大字号模式 | 文字更大更清晰（推荐）             |
+| 简洁模式   | 去掉干扰，专注内容                 |
+| 语音优先   | 选中文字自动朗读                   |
+| 夜间模式   | 深色背景，保护眼睛                 |
+| 自定义     | 自由组合各项增强功能               |
+
+**6 种增强器**：
+
+| 增强器         | 说明                       |
+| -------------- | -------------------------- |
+| 🔤 字体放大   | 三档可调（小/中/大）       |
+| 🎨 高对比度   | 三种主题（高对比/色盲/深色） |
+| 📄 阅读模式   | 去掉广告和干扰，专心阅读   |
+| 👆 防误触     | 按钮更大，不容易点错       |
+| 🔊 语音朗读   | 选中文字，帮您读出来       |
+| 🧭 页面引导   | 告诉您下一步该点哪里       |
 
 ---
 
@@ -184,12 +458,12 @@ npx http-server . -p 3000
 
 体验页面按四层架构组织，每个组件都配有可交互控件和实时示例代码：
 
-| 区域          | 可体验的内容                                       |
-| ------------- | -------------------------------------------------- |
-| 🎯 感官补偿   | 按钮防抖调参、字号语义切换、语音朗读、5 套色盲主题 |
-| 🧠 认知辅助   | 悬停看翻译气泡、呼吸动画引导高亮、浮动救援面板     |
-| 💬 情感连接   | 动态添加便签、触发花朵绽放纸屑、安全码联机模拟     |
-| 🔧 开发者工具 | 6 种老龄化模拟模式实时应用、一键合规检查扫描       |
+| 区域          | 可体验的内容                                                    |
+| ------------- | --------------------------------------------------------------- |
+| 🎯 感官补偿   | 按钮防抖调参、字号语义切换、语音朗读、5 套色盲主题              |
+| 🧠 认知辅助   | 悬停看翻译气泡、呼吸动画引导高亮、浮动救援面板                  |
+| 💬 情感连接   | 动态添加便签、触发花朵绽放纸屑、安全码联机模拟                  |
+| 🔧 开发者工具 | 9 种老龄化模拟模式实时应用、6 种适老化增强器、一键合规检查扫描  |
 
 ---
 
@@ -225,7 +499,107 @@ npx http-server . -p 3000
 
 <!-- 语音朗读页面结构 -->
 <warm-speech mode="outline">朗读页面结构</warm-speech>
+
+<!-- 卡片容器 -->
+<warm-card highlight>
+  <p>重要信息会高亮显示</p>
+</warm-card>
+
+<!-- 温和对话框 -->
+<warm-dialog id="dialog">
+  <span slot="header">确认操作</span>
+  <p>您确定要继续吗？</p>
+  <div slot="footer">
+    <warm-button onclick="this.closest('warm-dialog').close()">取消</warm-button>
+    <warm-button elder-friendly>确定</warm-button>
+  </div>
+</warm-dialog>
+<script>
+  document.getElementById("dialog").open();
+</script>
+
+<!-- 轻提示 -->
+<warm-toast id="toast" type="success">操作成功</warm-toast>
+<script>
+  document.getElementById("toast").show();
+</script>
+
+<!-- 家人便签 -->
+<warm-note type="reminder" author="小明" time="今天 10:30" dismissable>
+  记得下午 3 点去社区医院量血压
+</warm-note>
+
+<!-- 使用工具模块 -->
+<script type="module">
+  import { applyTheme, runAccessibilityCheck, formatReport } from "@warm-ui/components";
+
+  // 切换到高对比度主题
+  applyTheme("high-contrast");
+
+  // 运行合规检查
+  const report = await runAccessibilityCheck();
+  console.log(formatReport(report));
+</script>
 ```
+
+---
+
+## 开发指南
+
+### 环境要求
+
+- Node.js ≥ 18
+- npm ≥ 9
+
+### 本地开发
+
+```bash
+# 安装依赖
+npm install
+
+# 构建所有包
+npm run build
+
+# 单独构建
+npm run build:components   # 核心组件库
+npm run build:react        # React 封装
+npm run build:vue          # Vue 封装
+
+# 监听模式开发
+npm run dev
+
+# 运行测试
+npm run test
+
+# 代码检查
+npm run lint
+```
+
+### 文档站点
+
+```bash
+# 启动文档开发服务器
+npm run docs:dev
+
+# 构建文档
+npm run docs:build
+```
+
+### 浏览器插件开发
+
+```bash
+# 构建老龄化模拟器
+cd packages/plugin && npm run build
+
+# 构建适老化助手
+cd packages/elder-plugin && npm run build
+
+# 打包为 zip（用于发布到 Chrome 商店）
+cd packages/plugin && npm run zip
+cd packages/elder-plugin && npm run zip
+```
+
+构建后在 Chrome 的 `chrome://extensions` 页面选择"加载已解压的扩展程序"，指向对应包的 `dist` 目录即可。
 
 ---
 
@@ -236,6 +610,7 @@ warm-ui/
 ├── package.json                       # Monorepo 根配置（npm workspaces）
 ├── .editorconfig
 ├── .gitignore
+├── LICENSE                            # MIT 协议
 │
 ├── packages/
 │   ├── components/                    # 核心组件库（Web Components，框架无关）
@@ -248,7 +623,7 @@ warm-ui/
 │   │   │   │   ├── warm-dialog.js    #   对话框
 │   │   │   │   ├── warm-toast.js     #   轻提示
 │   │   │   │   ├── warm-guide.js     #   下一步引导（呼吸动画+高亮）
-│   │   │   │   ├── warm-rescue.js    #   迷路救援（语音+AI导航）
+│   │   │   │   ├── warm-rescue.js    #   迷路救援（语音+导航匹配）
 │   │   │   │   ├── warm-note.js      #   家人便签（远程系统）
 │   │   │   │   ├── warm-speech.js    #   语音朗读增强版
 │   │   │   │   ├── warm-translator.js#   大白话翻译器
@@ -264,16 +639,29 @@ warm-ui/
 │   │   │       └── api-proxy.js
 │   │   └── package.json
 │   │
-│   ├── react/                        # React 封装（12 个组件）
+│   ├── react/                        # React 封装（12 个组件 + 工具模块）
 │   │   └── src/components/
 │   │
-│   ├── vue/                          # Vue 封装（12 个组件）
+│   ├── vue/                          # Vue 封装（12 个组件 + 工具模块）
 │   │   └── src/components/
 │   │
-│   └── plugin/                       # 老龄化模拟器浏览器插件
+│   ├── plugin/                       # 老龄化模拟器浏览器插件（面向开发者）
+│   │   ├── manifest.json
+│   │   ├── popup/                    # 弹出面板（9 种模拟模式）
+│   │   └── content/                  # 页面内容脚本
+│   │
+│   └── elder-plugin/                 # 适老化助手浏览器插件（面向老人）
 │       ├── manifest.json
-│       ├── popup/                    # 弹出面板（10 种模拟模式）
-│       └── content/                  # 页面内容脚本
+│       ├── popup/                    # 弹出面板（5 种场景 + 6 种增强器）
+│       ├── content/                  # 页面内容脚本
+│       │   └── enhancers/            # 6 个增强器模块
+│       │       ├── font-enhancer.js
+│       │       ├── contrast-enhancer.js
+│       │       ├── layout-enhancer.js
+│       │       ├── click-enhancer.js
+│       │       ├── speech-enhancer.js
+│       │       └── guide-enhancer.js
+│       └── background/               # Service Worker
 │
 ├── demo/                             # 全功能模拟体验页面（即开即用）
 │   └── index.html                    #   交互式组件展示 + 老龄化模拟体验
@@ -284,12 +672,25 @@ warm-ui/
 │   └── tools/                        # 主题系统 / 合规检查 / 模拟器
 │
 ├── stories/                          # 每个组件的设计故事和使用场景
-│   ├── button.md → buddy.md         # 10 个用户故事
+│   ├── button.md → buddy.md         # 用户故事
 │   └── README.md
 │
 └── .github/
     └── CONTRIBUTING.md               # 特别欢迎非技术背景贡献者
 ```
+
+---
+
+## 浏览器兼容性
+
+| 特性               | Chrome | Firefox | Safari | Edge |
+| ------------------ | ------ | ------- | ------ | ---- |
+| Web Components     | ✅ 54+ | ✅ 63+  | ✅ 10.1+ | ✅ 79+ |
+| Speech Synthesis   | ✅ 33+ | ✅ 49+  | ✅ 7+  | ✅ 14+ |
+| Speech Recognition | ✅ 33+ | ❌      | ❌     | ✅ 79+ |
+| CSS Custom Props   | ✅ 49+ | ✅ 31+  | ✅ 9.1+ | ✅ 15+ |
+
+> 语音识别（Speech Recognition）目前仅 Chromium 内核浏览器支持，其他浏览器会优雅降级。
 
 ---
 
